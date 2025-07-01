@@ -1,0 +1,63 @@
+@if (isVisible) {
+<ion-card class="search-dropdown">
+  <ion-card-content>
+    @if (isLoading) {
+    <div class="loading-container">
+      <ion-spinner name="dots"></ion-spinner>
+      <ion-text color="medium">Searching...</ion-text>
+    </div>
+    } @else { @if (results) {
+    <!-- Users Section -->
+    @if (results.users.length > 0) {
+    <ion-item-divider>
+      <ion-label>Users</ion-label>
+    </ion-item-divider>
+    @for (user of results.users; track user.user_id) {
+    <app-user-result [user]="user" [simpleView]="true"></app-user-result>
+    } }
+
+    <!-- Livestreams Section -->
+    @if (results.livestreams.length > 0) {
+    <ion-item-divider>
+      <ion-label>Live Streams</ion-label>
+    </ion-item-divider>
+    @for (livestream of results.livestreams; track livestream.id) {
+    <app-livestream-result
+      [livestream]="livestream"
+      [simpleView]="true"
+    ></app-livestream-result>
+    } }
+
+    <!-- VODs Section -->
+    @if (results.vods.length > 0) {
+    <ion-item-divider>
+      <ion-label>Videos</ion-label>
+    </ion-item-divider>
+    @for (vod of results.vods; track vod.id) {
+    <app-vod-result [vod]="vod" [simpleView]="true"></app-vod-result>
+    } }
+
+    <!-- View All Results Button -->
+    @if (hasResults()) {
+    <ion-button
+      expand="block"
+      fill="clear"
+      size="small"
+      (click)="viewAllResults()"
+      class="view-all-button"
+    >
+      View All Results
+    </ion-button>
+    }
+
+    <!-- No Results -->
+    @if (!hasResults()) {
+    <ion-item>
+      <ion-label>
+        <ion-text color="medium">No results found</ion-text>
+      </ion-label>
+    </ion-item>
+    } } }
+  </ion-card-content>
+</ion-card>
+}

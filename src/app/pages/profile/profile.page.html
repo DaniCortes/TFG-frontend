@@ -1,0 +1,312 @@
+<ion-content class="ion-padding">
+  <div class="profile-container">
+    <!-- Loading Skeleton -->
+    @if (isProfileLoading) {
+    <div class="skeleton-container">
+      <ion-skeleton-text
+        animated
+        style="width: 100px; height: 100px; border-radius: 50%; margin: 0 auto"
+      ></ion-skeleton-text>
+      <ion-skeleton-text
+        animated
+        style="width: 60%; height: 24px; margin: 16px auto"
+      ></ion-skeleton-text>
+      <ion-skeleton-text
+        animated
+        style="width: 80%; height: 16px; margin: 8px auto"
+      ></ion-skeleton-text>
+      <ion-skeleton-text
+        animated
+        style="width: 90%; height: 60px; margin: 16px auto"
+      ></ion-skeleton-text>
+    </div>
+    }
+
+    <!-- Profile Content -->
+    @if (!isProfileLoading && profileData) {
+    <div class="profile-content">
+      <!-- Profile Header -->
+      <div class="profile-header">
+        <ion-avatar class="profile-avatar">
+          <img [src]="getProfileImageUrl()" alt="Profile Picture" />
+        </ion-avatar>
+        <h1 class="profile-name">{{ profileData.username }}</h1>
+        <ion-chip [disabled]="true">
+          @if(profileData.followers_count === 1) {
+          <ion-label> {{ profileData.followers_count }} Follower </ion-label>
+          } @else {
+          <ion-label> {{ profileData.followers_count }} Followers </ion-label>
+          }</ion-chip
+        >
+        @if (profileData.is_admin) {
+        <div>
+          <ion-chip (click)="navigateToAdminPanel()" class="admin-badge">
+            <ion-icon name="shield-outline"></ion-icon>
+            <ion-label color="dark">Admin</ion-label>
+          </ion-chip>
+        </div>
+        }
+      </div>
+      <!-- Profile Form (Edit Mode) -->
+      @if (isEditing) {
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>
+            <ion-icon name="create-outline"></ion-icon>
+            Edit Profile
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <form
+            [formGroup]="profileForm"
+            (ngSubmit)="saveProfile()"
+            class="profile-form"
+          >
+            <ion-item class="custom-input">
+              <ion-input
+                labelPlacement="floating"
+                type="text"
+                formControlName="username"
+              >
+                <div slot="label" class="input-label">Username</div>
+              </ion-input>
+            </ion-item>
+            @if (profileForm.get('username')?.touched &&
+            profileForm.get('username')?.invalid) {
+            <div class="error-message">
+              @if (profileForm.get('username')?.errors?.['required']) {
+              <span>Username is required</span>
+              } @if (profileForm.get('username')?.errors?.['pattern']) {
+              <span
+                >Username must be 3-16 characters long and can only contain
+                letters, numbers, underscores, and hyphens</span
+              >
+              }
+            </div>
+            }
+            <ion-item class="custom-input">
+              <ion-textarea
+                labelPlacement="floating"
+                formControlName="biography"
+                rows="4"
+                placeholder="Tell us about yourself..."
+              >
+                <div slot="label" class="input-label">Biography</div>
+              </ion-textarea>
+            </ion-item>
+            @if (profileForm.get('biography')?.touched &&
+            profileForm.get('biography')?.invalid) {
+            <div class="error-message">
+              @if (profileForm.get('biography')?.errors?.['maxlength']) {
+              <span>Biography cannot exceed 200 characters</span>
+              }
+            </div>
+            }
+            <ion-item class="custom-input toggle-item">
+              <ion-label>Regenerate Stream Key</ion-label>
+              <ion-toggle
+                formControlName="regenerateStreamKey"
+                slot="end"
+              ></ion-toggle>
+            </ion-item>
+            @if (profileForm.value.regenerateStreamKey) {
+            <div class="warning-message">
+              Warning: Regenerating your stream key will invalidate your current
+              key. You'll need to update your streaming software.
+            </div>
+            }
+            <div class="form-actions">
+              <div class="top-actions">
+                <ion-button
+                  fill="outline"
+                  (click)="toggleEdit()"
+                  class="cancel-button"
+                >
+                  Cancel
+                </ion-button>
+                <ion-button
+                  type="submit"
+                  [disabled]="!profileForm.valid || isLoading"
+                  class="save-button"
+                >
+                  @if(isLoading) {
+                  <ion-spinner name="crescent"></ion-spinner>
+                  } @else {
+                  <ion-icon name="save-outline" slot="start"></ion-icon>
+                  Save }
+                </ion-button>
+              </div>
+              @if(!isChangingPassword) {
+              <ion-button
+                expand="block"
+                (click)="toggleChangePasswordForm()"
+                class="change-password-button"
+              >
+                <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+                Change Password
+              </ion-button>
+              }
+            </div>
+          </form>
+        </ion-card-content>
+      </ion-card>
+      }
+      <!-- Change Password Form -->
+      @if (isChangingPassword) {
+      <div class="change-password-container">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>
+              <ion-icon name="lock-closed-outline"></ion-icon>
+              Change Password
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <form
+              [formGroup]="changePasswordForm"
+              (ngSubmit)="changePassword()"
+              class="password-form"
+            >
+              <ion-item class="custom-input">
+                <ion-input
+                  labelPlacement="floating"
+                  [type]="showOldPassword ? 'text': 'password'"
+                  formControlName="old_password"
+                >
+                  <div slot="label" class="input-label">Old Password</div>
+                </ion-input>
+                <ion-button
+                  (click)="showOldPassword = !showOldPassword"
+                  (mousedown)="$event.preventDefault()"
+                  slot="end"
+                  class="password-toggle"
+                >
+                  <ion-icon
+                    [name]="showOldPassword ? 'eye-off' : 'eye'"
+                    color="medium"
+                  ></ion-icon>
+                </ion-button>
+              </ion-item>
+              @if (changePasswordForm.get('old_password')?.touched &&
+              changePasswordForm.get('old_password')?.invalid) {
+              <div class="error-message">
+                @if
+                (changePasswordForm.get('old_password')?.errors?.['required']) {
+                <span>Old Password is required</span>
+                }
+              </div>
+              }
+              <ion-item class="custom-input">
+                <ion-input
+                  labelPlacement="floating"
+                  [type]="showNewPassword ? 'text': 'password'"
+                  formControlName="new_password"
+                >
+                  <div slot="label" class="input-label">New Password</div>
+                </ion-input>
+                <ion-button
+                  (click)="showNewPassword = !showNewPassword"
+                  (mousedown)="$event.preventDefault()"
+                  slot="end"
+                  class="password-toggle"
+                >
+                  <ion-icon
+                    [name]="showNewPassword ? 'eye-off' : 'eye'"
+                    color="medium"
+                  ></ion-icon>
+                </ion-button>
+              </ion-item>
+              @if (changePasswordForm.get('new_password')?.touched &&
+              changePasswordForm.get('new_password')?.invalid) {
+              <div class="error-message">
+                @if
+                (changePasswordForm.get('new_password')?.errors?.['required']) {
+                <span>New Password is required</span>
+                }
+              </div>
+              }
+              <div class="top-actions">
+                <ion-button
+                  fill="outline"
+                  expand="block"
+                  (click)="toggleChangePasswordForm()"
+                  class="cancel-button"
+                >
+                  Cancel
+                </ion-button>
+                <ion-button
+                  type="submit"
+                  expand="block"
+                  [disabled]="changePasswordForm.invalid || isLoadingPassword"
+                  class="change-password-button"
+                >
+                  @if(isLoadingPassword) {
+                  <ion-spinner name="crescent" slot="start"></ion-spinner>
+                  } @else {
+                  <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+                  Change Password }
+                </ion-button>
+              </div>
+            </form>
+          </ion-card-content>
+        </ion-card>
+      </div>
+      }
+      <!-- Profile Details (View Mode) -->
+      @if (!isEditing) {
+      <div class="profile-details">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>
+              <ion-icon name="person-outline"></ion-icon>
+              Profile Information
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content style="padding-bottom: 0.6rem">
+            <div class="info-item">
+              <div class="info-label">Username</div>
+              <div class="info-value">{{ profileData.username }}</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">Biography</div>
+              <div class="info-value biography">
+                {{ profileData.biography || 'No biography provided' }}
+              </div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">Stream Key</div>
+              <div class="info-value stream-key">
+                <span class="stream-key-value" [title]="profileData.stream_key">
+                  @if (!showStreamKey) { •••••••••••••••• } @if (showStreamKey)
+                  { {{ profileData.stream_key }} }
+                </span>
+                <ion-button
+                  fill="clear"
+                  size="small"
+                  (click)="toggleStreamKeyVisibility()"
+                  class="toggle-key-button"
+                >
+                  {{ showStreamKey ? 'Hide' : 'Show' }}
+                </ion-button>
+              </div>
+            </div>
+            @if (profileData.is_admin) {
+            <div class="info-item">
+              <div class="info-label">User ID</div>
+              <div class="info-value user-id">{{ profileData.user_id }}</div>
+            </div>
+            }
+          </ion-card-content>
+        </ion-card>
+        <div class="profile-actions">
+          <ion-button expand="block" (click)="toggleEdit()" class="edit-button">
+            <ion-icon name="create-outline" slot="start"></ion-icon>
+            Edit Profile
+          </ion-button>
+        </div>
+      </div>
+      }
+    </div>
+    }
+  </div>
+</ion-content>

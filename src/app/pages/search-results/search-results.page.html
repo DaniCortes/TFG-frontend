@@ -1,0 +1,71 @@
+<ion-content class="ion-padding">
+  @if (isLoading) {
+  <div class="loading-container">
+    <ion-spinner></ion-spinner>
+  </div>
+  } @if (!isLoading) {
+  <!-- Users Section -->
+  @if (allUsers.length > 0) {
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Users ({{ allUsers.length }})</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      @for (user of allUsers; track user.user_id) {
+      <app-user-result [user]="user"></app-user-result>
+      } @if (canLoadMoreUsers) {
+      <ion-button expand="block" fill="outline" (click)="loadMoreUsers()">
+        Load More Users
+      </ion-button>
+      }
+    </ion-card-content>
+  </ion-card>
+  }
+
+  <!-- Livestreams Section -->
+  @if (allLivestreams.length > 0) {
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        Live Streams ({{ allLivestreams.length }})
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      @for (livestream of allLivestreams; track livestream.id) {
+      <app-livestream-result [livestream]="livestream"></app-livestream-result>
+      } @if (canLoadMoreLivestreams) {
+      <ion-button expand="block" fill="outline" (click)="loadMoreLivestreams()">
+        Load More Livestreams
+      </ion-button>
+      }
+    </ion-card-content>
+  </ion-card>
+  }
+
+  <!-- VODs Section -->
+  @if (allVods.length > 0) {
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Videos ({{ allVods.length }})</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      @for (vod of allVods; track vod.id) {
+      <app-vod-result [vod]="vod"></app-vod-result>
+      } @if (canLoadMoreVods) {
+      <ion-button expand="block" fill="outline" (click)="loadMoreVods()">
+        Load More Videos
+      </ion-button>
+      }
+    </ion-card-content>
+  </ion-card>
+  }
+
+  <!-- No Results -->
+  @if (!hasAnyResults() && searchQuery) {
+  <ion-card>
+    <ion-card-content>
+      <p>No results found for "{{ searchQuery }}"</p>
+    </ion-card-content>
+  </ion-card>
+  } }
+</ion-content>

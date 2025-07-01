@@ -1,0 +1,128 @@
+<ion-card class="chat-container" [style.height]="height">
+  <ion-card-header>
+    <ion-card-title class="chat-header">
+      <ion-item lines="none" class="header-item">
+        <ion-icon name="chatbubble-outline" slot="start"></ion-icon>
+        <ion-label>Chat</ion-label>
+        <ion-badge
+          [color]="chatState.isConnected ? 'success' : 'danger'"
+          slot="end"
+          class="connection-badge"
+        >
+          {{ chatState.isConnected ? "Connected" : "Disconnected" }}
+        </ion-badge>
+      </ion-item>
+
+      @if (chatState.isRestricted) {
+      <ion-item lines="none" class="restriction-notice" color="warning">
+        <ion-icon name="alert-circle-outline" slot="start"></ion-icon>
+        <ion-label>You are restricted from sending messages</ion-label>
+      </ion-item>
+      }
+    </ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content class="chat-content">
+    <!-- Connection Error -->
+    @if (chatState.connectionError && !chatState.isConnected) {
+    <ion-item lines="none" class="connection-error" color="danger">
+      <ion-icon name="close-circle-outline" slot="start"></ion-icon>
+      <ion-label>{{ chatState.connectionError }}</ion-label>
+      <ion-button size="small" fill="outline" slot="end" (click)="reconnect()">
+        Reconnect
+      </ion-button>
+    </ion-item>
+    }
+
+    <!-- Messages Container -->
+    <ion-content
+      #messagesContainer
+      class="messages-content"
+      [scrollEvents]="true"
+      [class.loading]="!chatState.isConnected"
+    >
+      @if (!chatState.isConnected && !chatState.connectionError) {
+      <ion-item lines="none" class="loading-state">
+        <ion-spinner name="crescent" slot="start"></ion-spinner>
+        <ion-label>Connecting to chat...</ion-label>
+      </ion-item>
+      } @if (chatState.messages.length === 0 && chatState.isConnected) {
+      <ion-item lines="none" class="empty-state">
+        <ion-icon
+          name="chatbubble-outline"
+          color="medium"
+          slot="start"
+        ></ion-icon>
+        <ion-label color="medium"
+          >No messages yet. Start the conversation!</ion-label
+        >
+      </ion-item>
+      } @for (message of chatState.messages; track message.message_id || $index)
+      {
+      <ion-item
+        lines="none"
+        [class]="'message-item ' + getMessageTypeClass(message)"
+      >
+        <ion-label class="message-label">
+          <ion-item lines="none" class="message-header-item">
+            @if (message.sender_username) {
+            <ion-label class="username" slot="start">{{
+              message.sender_username
+            }}</ion-label>
+            } @if (message.event !== 'user_message') {
+            <ion-badge
+              size="small"
+              [color]="
+                message.event === 'server_message'
+                  ? 'primary'
+                  : message.event === 'ban_user'
+                  ? 'danger'
+                  : 'warning'
+              "
+              slot="end"
+            >
+              {{ message.event.replace("_", " ") }}
+            </ion-badge>
+            }
+            <ion-label class="timestamp" slot="end">{{
+              formatTimestamp(message.timestamp)
+            }}</ion-label>
+          </ion-item>
+
+          <ion-item lines="none" class="message-content-item">
+            <ion-label class="message-text">{{ message.content }}</ion-label>
+          </ion-item>
+        </ion-label>
+      </ion-item>
+      }
+    </ion-content>
+  </ion-card-content>
+
+  <!-- Message Input - Fixed at bottom -->
+  <ion-card-content class="input-container">
+    <ion-item
+      class="message-input-item"
+      [class.disabled]="chatState.isRestricted || !chatState.isConnected"
+    >
+      <ion-input
+        #messageInput
+        [(ngModel)]="newMessage"
+        placeholder="Type a message..."
+        [disabled]="chatState.isRestricted || !chatState.isConnected"
+        (keydown)="onKeyPress($event)"
+        maxlength="500"
+      >
+      </ion-input>
+      <ion-button
+        slot="end"
+        fill="clear"
+        [disabled]="
+          !newMessage.trim() || chatState.isRestricted || !chatState.isConnected
+        "
+        (click)="sendMessage()"
+      >
+        <ion-icon name="send-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-card-content>
+</ion-card>

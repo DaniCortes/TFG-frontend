@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" class="start-buttons">
+      <ion-button (click)="returnToHome()">
+        <ion-icon name="logo-ionic"></ion-icon>
+      </ion-button>
+      <ion-title>{{ title }}</ion-title>
+    </ion-buttons>
+
+    <div class="search-container">
+      @if(isLoggedIn()) {
+      <ion-searchbar
+        #searchbar
+        [(ngModel)]="searchQuery"
+        [debounce]="300"
+        (ionInput)="onSearchInput($event)"
+        (keydown.enter)="onSearchEnter()"
+        (ionFocus)="onSearchFocus()"
+        (ionBlur)="onSearchBlur()"
+        (ionClear)="onSearchClear()"
+        placeholder="Search users, streams, videos..."
+        [showClearButton]="'always'"
+      >
+      </ion-searchbar>
+      }
+    </div>
+
+    <ion-buttons slot="end" class="end-buttons">
+      @if(isLoggedIn()) {
+      <ion-button (click)="logout()">
+        <ion-icon name="log-out-outline"></ion-icon>
+      </ion-button>
+      }
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<app-search-dropdown
+  [results]="searchResults"
+  [isVisible]="showDropdown"
+  [isLoading]="isSearching"
+  (viewAll)="navigateToSearchResults()"
+>
+</app-search-dropdown>

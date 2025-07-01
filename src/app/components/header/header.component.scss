@@ -1,0 +1,39 @@
+ion-button {
+    --padding-start: 0.5rem;
+    --padding-end: 0.5rem;
+}
+
+
+ion-buttons[slot="end"] {
+    justify-content: flex-end;
+}
+
+ion-buttons {
+    --padding-start: 0.5rem;
+    --padding-end: 0.5rem;
+    width: 150px;
+}
+
+ion-toolbar {
+    --background: var(--ion-item-background);
+    --color: white;
+    display: flex;
+    align-items: center;
+}
+
+ion-icon {
+    font-size: 24px;
+}
+
+ion-searchbar {
+    --background: rgba(255, 255, 255, 0.08);
+    --color: white;
+    --placeholder-color: var(--ion-color-medium);
+    --padding-start: 0.1rem;
+    --padding-end: 0.1rem;
+    --box-shadow: none;
+    --border-radius: 0.5rem;
+    max-width: 45rem;
+    margin: 0 auto; 
+
+}

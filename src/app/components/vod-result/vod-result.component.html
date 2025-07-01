@@ -1,0 +1,23 @@
+<ion-item button lines="full" (click)="onVODClick()">
+  @if(simpleView) {
+  <ion-img
+    class="thumbnail small"
+    slot="start"
+    [src]="getThumbnailURL(vod)"
+    alt="{{ vod.title }}"
+  ></ion-img>
+  } @else {
+  <ion-img
+    class="thumbnail large"
+    slot="start"
+    [src]="getThumbnailURL(vod)"
+    alt="{{ vod.title }}"
+  ></ion-img>
+  }
+  <ion-label>
+    <h3>{{ vod.title }}</h3>
+    <p>{{ timeService.getTimeAgo(vod.end_time) }}</p>
+    <p class="username">By {{ user.username }}</p>
+    <ion-badge color="medium">VOD</ion-badge>
+  </ion-label>
+</ion-item>

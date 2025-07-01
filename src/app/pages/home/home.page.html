@@ -1,0 +1,20 @@
+<ion-content class="ion-padding">
+  <ion-card class="home-container">
+    <div class="welcome-container">
+      <h1 class="welcome-title">Welcome, {{ username }}!</h1>
+      <p class="welcome-subtitle">You are now logged in.</p>
+    </div>
+
+    <div class="actions-container">
+      <ion-button expand="block" routerLink="/profile" class="profile-button">
+        <ion-icon name="person-outline" slot="start"></ion-icon>
+        View Profile
+      </ion-button>
+
+      <ion-button expand="block" (click)="logout()" class="logout-button">
+        <ion-icon name="log-out-outline" slot="start"></ion-icon>
+        Logout
+      </ion-button>
+    </div>
+  </ion-card>
+</ion-content>

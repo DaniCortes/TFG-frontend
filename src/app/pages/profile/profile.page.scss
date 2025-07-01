@@ -1,0 +1,263 @@
+.toggle-item {
+  --inner-padding-end: 0;
+}
+
+ion-toggle {
+  padding-right: 1rem;
+}
+
+.warning-message {
+  color: var(--ion-color-warning);
+  font-size: 12px;
+  margin-top: -10px;
+  margin-bottom: 15px;
+  padding-left: 16px;
+  font-weight: 500;
+}
+
+.error-message {
+  color: var(--ion-color-danger);
+  font-size: 12px;
+  margin-top: -10px;
+  margin-bottom: 15px;
+  padding-left: 16px;
+  font-weight: 500;
+}
+
+ion-content {
+  --background: var(--ion-background-color);
+}
+
+.profile-container {
+  max-width: 45rem;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 0.5rem;
+}
+
+.skeleton-container {
+  padding: 2rem;
+  background: var(--ion-item-background);
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.profile-content {
+  background: var(--ion-item-background);
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+.profile-header {
+  text-align: center;
+  padding: 3rem 2rem 2rem;
+  background: linear-gradient(
+    to bottom,
+    var(--ion-color-primary-shade),
+    var(--ion-color-primary)
+  );
+  color: white;
+  border-radius: 1rem 1rem 0 0;
+}
+
+.profile-avatar {
+  width: 7rem;
+  height: 7rem;
+  margin: 0 auto 1.5rem;
+  border: 0.3rem solid white;
+  box-shadow: 0 0.4rem 1rem rgba(0, 0, 0, 0.2);
+}
+
+.profile-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+}
+
+.admin-badge {
+  --background: var(--ion-color-primary-shade);
+  --color: white;
+}
+
+.profile-form {
+  padding: 1rem;
+}
+
+.password-form {
+  padding: 1rem;
+}
+
+.custom-input {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+ion-chip {
+  opacity: 1;
+}
+
+ion-item {
+  --highlight-color-focused: var(--ion-color-primary);
+  --highlight-color-valid: var(--ion-color-primary);
+  --highlight-color-invalid: var(--ion-color-danger);
+  --color: var(--ion-text-color);
+  font-weight: 500;
+}
+
+ion-label {
+  --color: var(--ion-color-medium) !important;
+  font-weight: 500 !important;
+}
+
+ion-input,
+ion-textarea {
+  --color: var(--ion-text-color);
+  font-weight: 500;
+  --placeholder-color: var(--ion-color-medium);
+  --placeholder-opacity: 0.8;
+}
+
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+ion-button {
+  --background: var(--ion-color-primary);
+  font-weight: 600;
+}
+
+.top-actions {
+  display: flex;
+  gap: 0.2rem;
+  margin-bottom: 0.2rem;
+}
+
+.cancel-button,
+.save-button,
+.change-password-button {
+  flex: 1;
+}
+
+.profile-details {
+  padding: 0 0 1.5rem;
+}
+
+ion-card {
+  margin: 0;
+  box-shadow: none;
+  background: transparent;
+}
+
+ion-card-header {
+  padding-bottom: 0;
+}
+
+ion-card-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+}
+
+ion-card-title ion-icon {
+  margin-right: 0.5rem;
+}
+
+.info-item {
+  margin-bottom: 1rem;
+  border-bottom: 1px solid rgba(var(--ion-color-medium-rgb), 0.2);
+  padding-bottom: 1rem;
+  margin-top: 1rem;
+}
+
+.info-item:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.info-label {
+  font-size: 14px;
+  color: var(--ion-color-medium);
+  margin-bottom: 0.3rem;
+  font-weight: 500;
+}
+
+.info-value {
+  font-size: 16px;
+  color: var(--ion-text-color);
+  font-weight: 500;
+}
+
+.biography {
+  white-space: pre-line;
+  line-height: 1.5;
+}
+
+.stream-key {
+  display: flex;
+  align-items: center;
+  font-family: monospace;
+  background: rgba(var(--ion-color-dark-rgb), 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  min-width: 0;
+}
+
+.user-id {
+  font-family: monospace;
+  font-size: 14px;
+  color: var(--ion-color-medium);
+  font-weight: 500;
+}
+
+.stream-key-value {
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+  max-width: 100%;
+  font-size: 15px;
+  color: var(--ion-text-color);
+  background: transparent;
+  flex: 1 1 0;
+  min-width: 0;
+  margin-right: 0.5rem;
+}
+
+.toggle-key-button {
+  --color: var(--ion-color-primary);
+  font-weight: 600;
+  font-size: 12px;
+  height: 30px;
+  color: var(--ion-text-color);
+  width: 60px;
+  text-align: center;
+}
+
+.profile-actions {
+  padding: 0 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.edit-button {
+  --background: var(--ion-color-primary);
+  font-weight: 600;
+  height: 3rem;
+  font-size: 1rem;
+}
+
+@media (max-width: 480px) {
+  .profile-container {
+    padding: 0;
+  }
+
+  .profile-content {
+    box-shadow: none;
+    border-radius: 1rem;
+  }
+}

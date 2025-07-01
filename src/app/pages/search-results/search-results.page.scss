@@ -1,0 +1,15 @@
+.loading-container {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+ion-content {
+  --background: var(--ion-background-color);
+}
+
+ion-card {
+  border-radius: 1rem;
+  --background: var(--ion-background-color);
+  box-shadow: none;
+}

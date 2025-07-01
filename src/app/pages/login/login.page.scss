@@ -1,0 +1,105 @@
+ion-content {
+  --background: var(--ion-background-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-container {
+  max-width: 400px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  background: var(--ion-item-background);
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.logo-container {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.app-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--ion-color-primary);
+  margin-bottom: 0.5rem;
+}
+
+.app-subtitle {
+  color: var(--ion-color-medium);
+  font-size: 16px;
+  margin-top: 0;
+}
+
+.form-container {
+  margin-bottom: 1.5rem;
+}
+
+.custom-input {
+  --background: rgba(255, 255, 255, 0.08);
+  --padding-start: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 0.5rem;
+}
+
+ion-item {
+  --highlight-color-focused: var(--ion-color-primary);
+  --highlight-color-valid: var(--ion-color-primary);
+  --highlight-color-invalid: var(--ion-color-danger);
+
+  /* Improved text contrast */
+  --color: var(--ion-text-color);
+  font-weight: 500;
+}
+
+ion-label {
+  --color: var(--ion-color-medium) !important;
+  font-weight: 500 !important;
+}
+
+.error-message {
+  color: var(--ion-color-danger);
+  font-size: 12px;
+  margin-top: -10px;
+  margin-bottom: 15px;
+  padding-left: 16px;
+  font-weight: 500;
+}
+
+.login-button {
+  margin-top: 20px;
+  --border-radius: 0.5rem;
+  --background: var(--ion-color-primary);
+  font-weight: 600;
+  height: 3rem;
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+.footer-text {
+  text-align: center;
+  margin-top: 20px;
+  color: var(--ion-color-medium);
+  font-weight: 500;
+}
+
+.register-link {
+  color: var(--ion-color-primary);
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.register-link:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .login-container {
+    box-shadow: none;
+    padding: 0;
+    background: transparent;
+  }
+}

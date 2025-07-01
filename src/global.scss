@@ -34,4 +34,56 @@
 
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import '@ionic/angular/css/palettes/dark.system.css';
+@import "@ionic/angular/css/palettes/dark.system.css";
+
+ion-header ion-toolbar {
+  --background: var(--ion-item-background);
+  --color: white;
+}
+
+ion-content {
+  --background: var(--ion-background-color);
+  &.ion-padding {
+    --padding-top: 4.5rem !important;
+  }
+}
+
+ion-item {
+  --background: transparent;
+}
+
+ion-button {
+  --border-radius: 0.5rem;
+  --background: var(--ion-color-primary);
+  --color: white;
+  font-weight: 600;
+}
+
+ion-menu {
+  max-width: 15rem;
+  min-width: 5rem;
+}
+
+ion-spinner {
+  height: 100%;
+  margin-right: 0.1rem;
+}
+
+.input-label {
+  color: var(--ion-color-medium);
+}
+
+.password-toggle {
+  --background: transparent !important;
+  --box-shadow: none !important;
+  font-size: 1rem;
+}
+
+ion-input,
+ion-textarea {
+  --background: rgba(255, 255, 255, 0.08);
+  --color: white;
+  --padding-start: 10px;
+  --padding-end: 10px;
+  border-radius: 4px;
+}

@@ -1,3 +1,19 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <app-header [title]="pageTitle"></app-header>
+  @if (showSidebar) {
+  <ion-split-pane contentId="main-content" when="lg">
+    <ion-menu
+      menuId="follow-menu"
+      contentId="main-content"
+      type="overlay"
+      side="start"
+    >
+      <app-sidebar></app-sidebar>
+    </ion-menu>
+
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+  </ion-split-pane>
+  } @else {
+  <ion-router-outlet id="main-content"></ion-router-outlet>
+  }
 </ion-app>

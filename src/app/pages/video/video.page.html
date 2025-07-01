@@ -1,0 +1,36 @@
+<ion-content class="ion-padding">
+  @if (isLoading) {
+  <div class="loading-container">
+    <ion-spinner name="crescent" color="primary"></ion-spinner>
+    <ion-text color="medium">Loading video...</ion-text>
+  </div>
+  } @else {
+  <ion-grid class="video-grid">
+    <ion-row class="video-row">
+      <!-- Video Player Column -->
+      <ion-col size="12" size-lg="8" class="video-col">
+        <app-video-player
+          [streamId]="streamId"
+          [isLive]="isLive"
+          [title]="title"
+        >
+        </app-video-player>
+      </ion-col>
+      @if (isLive) {
+      <ion-col size="12" size-lg="4" class="chat-col">
+        <app-chat [streamId]="streamId" height="100%"> </app-chat>
+      </ion-col>
+      } @else {
+      <ion-col size="12" size-lg="4" class="chat-col">
+        <ion-item>
+          <ion-label class="vod-info">
+            This is a VOD. Live chat is not available.
+          </ion-label>
+        </ion-item>
+      </ion-col>
+      }
+      <!-- Chat Column -->
+    </ion-row>
+  </ion-grid>
+  }
+</ion-content>

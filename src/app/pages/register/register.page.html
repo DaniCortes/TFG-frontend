@@ -1,0 +1,112 @@
+<ion-content class="ion-padding">
+  <div class="register-container">
+    <div class="logo-container">
+      <h1 class="app-title">Your App</h1>
+      <p class="app-subtitle">Create a new account</p>
+    </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <div class="form-container">
+        <ion-item class="custom-input">
+          <ion-input
+            labelPlacement="floating"
+            type="text"
+            formControlName="username"
+          >
+            <div slot="label" class="input-label">Username</div>
+          </ion-input>
+        </ion-item>
+        @if (registerForm.get('username')?.touched &&
+        registerForm.get('username')?.invalid) {
+        <div class="error-message">
+          @if (registerForm.get('username')?.errors?.['required']) {
+          <span>Username is required</span>
+          } @if (registerForm.get('username')?.errors?.['pattern']) {
+          <span>Please enter a valid username</span>
+          }
+        </div>
+        }
+
+        <ion-item class="custom-input">
+          <ion-input
+            labelPlacement="floating"
+            [type]="showPassword ? 'text' : 'password'"
+            formControlName="password"
+          >
+            <div slot="label" class="input-label">Password</div>
+          </ion-input>
+          <ion-button
+            (click)="showPassword = !showPassword"
+            (mousedown)="$event.preventDefault()"
+            slot="end"
+            class="password-toggle"
+          >
+            <ion-icon
+              [name]="showPassword ? 'eye-off' : 'eye'"
+              color="medium"
+            ></ion-icon>
+          </ion-button>
+        </ion-item>
+        @if (registerForm.get('password')?.touched &&
+        registerForm.get('password')?.invalid) {
+        <div class="error-message">
+          @if (registerForm.get('password')?.errors?.['required']) {
+          <span>Password is required</span>
+          } @if (registerForm.get('password')?.errors?.['minlength']) {
+          <span>Password must be at least 6 characters</span>
+          }
+        </div>
+        }
+
+        <ion-item class="custom-input">
+          <ion-input
+            labelPlacement="floating"
+            [type]="showPassword ? 'text' : 'password'"
+            formControlName="confirmPassword"
+          >
+            <div slot="label" class="input-label">Confirm Password</div>
+          </ion-input>
+          <ion-button
+            (click)="showPassword = !showPassword"
+            (mousedown)="$event.preventDefault()"
+            slot="end"
+            class="password-toggle"
+          >
+            <ion-icon
+              [name]="showPassword ? 'eye-off' : 'eye'"
+              color="medium"
+            ></ion-icon>
+          </ion-button>
+        </ion-item>
+        @if (registerForm.get('confirmPassword')?.touched &&
+        registerForm.get('confirmPassword')?.invalid) {
+        <div class="error-message">
+          @if (registerForm.get('confirmPassword')?.errors?.['required']) {
+          <span>Confirm Password is required</span>
+          } @if (registerForm.get('confirmPassword')?.errors?.['mismatch']) {
+          <span>Passwords do not match</span>
+          }
+        </div>
+        }
+
+        <ion-button
+          expand="block"
+          type="submit"
+          [disabled]="!registerForm.valid || isLoading"
+          class="register-button"
+        >
+          @if (isLoading) {
+          <ion-spinner name="crescent"></ion-spinner>
+          } @else { Create Account }
+        </ion-button>
+      </div>
+    </form>
+
+    <div class="footer-text">
+      <p>
+        Already have an account?
+        <a routerLink="/login" class="login-link">Sign In</a>
+      </p>
+    </div>
+  </div>
+</ion-content>

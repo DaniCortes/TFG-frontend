@@ -1,0 +1,23 @@
+<ion-item button lines="full" (click)="onLivestreamClick()">
+  @if(simpleView) {
+  <ion-img
+    class="thumbnail small"
+    slot="start"
+    [src]="getThumbnailURL(livestream)"
+    alt="{{ livestream.title }}"
+  ></ion-img>
+  } @else {
+  <ion-img
+    class="thumbnail large"
+    slot="start"
+    [src]="getThumbnailURL(livestream)"
+    alt="{{ livestream.title }}"
+  ></ion-img>
+  }
+  <ion-label>
+    <h3>{{ livestream.title }}</h3>
+    <p>{{ timeService.getStreamStartedTime(livestream.start_time) }}</p>
+    <p class="username">By {{ user.username }}</p>
+    <ion-badge color="danger">LIVE</ion-badge>
+  </ion-label>
+</ion-item>

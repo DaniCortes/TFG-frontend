@@ -1,0 +1,16 @@
+<ion-item button lines="full" (click)="onUserClick()">
+  <ion-avatar slot="start">
+    <img [src]="defaultProfilePicture" [alt]="user.username" />
+  </ion-avatar>
+  <ion-label>
+    <div class="user-info">
+      <h3>{{ user.username }}</h3>
+      <h3 class="followers-info">{{ user.followers_count }} followers</h3>
+    </div>
+    <p>
+      <ion-badge [color]="user.stream_status === 'live' ? 'success' : 'medium'">
+        {{ user.stream_status }}
+      </ion-badge>
+    </p>
+  </ion-label>
+</ion-item>

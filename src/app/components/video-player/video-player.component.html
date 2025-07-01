@@ -1,0 +1,122 @@
+<div class="video-player-container">
+  <h3 class="video-title">{{ title }}</h3>
+
+  <div
+    #videoContainer
+    class="video-wrapper"
+    [class.fullscreen]="isFullscreen"
+    (mouseenter)="onMouseEnter()"
+    (mouseleave)="onMouseLeave()"
+    (mousemove)="onMouseMove()"
+  >
+    <video
+      #videoElement
+      class="video-element"
+      [poster]="thumbnailUrl"
+      playsinline
+      (click)="onVideoClick()"
+      (dblclick)="onVideoDoubleClick()"
+      (loadstart)="onVideoLoadStart()"
+      (canplay)="onVideoCanPlay()"
+      (timeupdate)="onVideoTimeUpdate()"
+      (play)="onVideoPlay()"
+      (pause)="onVideoPause()"
+    >
+      Your browser does not support the video tag.
+    </video>
+
+    <!-- Loading Spinner -->
+    @if (isLoading) {
+    <div class="loading-overlay">
+      <ion-spinner name="crescent" color="dark"></ion-spinner>
+    </div>
+    }
+
+    <!-- Custom Controls -->
+    <div class="controls-overlay" [class.visible]="showControls || !isPlaying">
+      <div class="controls-container">
+        <!-- Left Controls -->
+        <div class="controls-left">
+          <ion-button fill="clear" color="dark" (click)="togglePlayPause()">
+            <ion-icon
+              [name]="isPlaying ? 'pause-outline' : 'play-outline'"
+              slot="icon-only"
+            >
+            </ion-icon>
+          </ion-button>
+
+          <!-- Progress Bar (VOD only) -->
+          @if (!isLive) {
+          <div class="progress-container">
+            <div class="progress-bar" (click)="onProgressClick($event)">
+              <div class="progress-fill" [style.width.%]="progress"></div>
+            </div>
+          </div>
+          }
+
+          <!-- Live Indicator -->
+          @if (isLive) {
+          <div class="live-indicator" (click)="seekToLive()">
+            <ion-icon name="radio-outline"></ion-icon>
+            <span>LIVE</span>
+          </div>
+          }
+
+          <!-- Time Display (VOD only) -->
+          @if (!isLive && duration > 0) {
+          <span class="time-display">
+            {{ formatTime(currentTime) }} / {{ formatTime(duration) }}
+          </span>
+          }
+
+          <ion-button fill="clear" color="dark" (click)="toggleMute()">
+            <ion-icon
+              [name]="isMuted ? 'volume-mute-outline' : 'volume-high-outline'"
+              slot="icon-only"
+            >
+            </ion-icon>
+          </ion-button>
+        </div>
+
+        <!-- Right Controls -->
+        <div class="controls-right">
+          <!-- Quality Menu -->
+          <div class="quality-selector">
+            <ion-button fill="clear" color="dark" (click)="toggleQualityMenu()">
+              <ion-icon name="settings-outline" slot="icon-only"></ion-icon>
+            </ion-button>
+
+            @if (showQualityMenu) {
+            <div class="quality-menu">
+              <div
+                class="quality-option"
+                [class.selected]="currentQuality === -1"
+                (click)="selectQuality(-1)"
+              >
+                Auto
+              </div>
+              @for (quality of qualityLevels; track quality.index) {
+              <div
+                class="quality-option"
+                [class.selected]="currentQuality === quality.index"
+                (click)="selectQuality(quality.index)"
+              >
+                {{ quality.height }}p
+              </div>
+              }
+            </div>
+            }
+          </div>
+
+          <ion-button fill="clear" color="dark" (click)="toggleFullscreen()">
+            <ion-icon
+              [name]="isFullscreen ? 'contract-outline' : 'expand-outline'"
+              slot="icon-only"
+            >
+            </ion-icon>
+          </ion-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

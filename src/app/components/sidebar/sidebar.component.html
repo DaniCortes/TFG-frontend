@@ -1,0 +1,76 @@
+<ion-content>
+  <ion-title style="padding: 1rem">Following</ion-title>
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Following</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <!-- Loading State -->
+  @if (isLoading && followedUsers.length === 0) {
+  <ion-item class="user-item skeleton-item users-container">
+    <ion-avatar slot="start" class="user-avatar">
+      <ion-skeleton-text animated class="skeleton-avatar"></ion-skeleton-text>
+    </ion-avatar>
+
+    <ion-label>
+      <h3 class="username">
+        <ion-skeleton-text animated class="skeleton-text"></ion-skeleton-text>
+      </h3>
+    </ion-label>
+
+    <div slot="end" class="status-container">
+      <ion-skeleton-text
+        animated
+        class="skeleton-status-chip"
+      ></ion-skeleton-text>
+    </div>
+  </ion-item>
+  <ion-content class="loading-container">
+    <ion-spinner name="crescent" color="primary"></ion-spinner>
+    <ion-text color="medium">
+      <p>Loading followed users...</p>
+    </ion-text>
+  </ion-content>
+  }
+
+  <!-- Empty State -->
+  @if (!isLoading && followedUsers.length === 0) {
+  <div class="empty-state">
+    <ion-icon
+      name="people-outline"
+      color="medium"
+      class="empty-icon"
+    ></ion-icon>
+    <ion-text color="medium">
+      <h3>No followed users</h3>
+      <p>Start following streamers to see them here!</p>
+    </ion-text>
+  </div>
+  }
+
+  <!-- Users List -->
+  @if (followedUsers.length > 0) {
+  <div class="users-container">
+    <!-- Online Users Section -->
+    @if (onlineUsers.length > 0) {
+    <ion-list class="users-list online-list">
+      @for (user of onlineUsers; track user.user_id) {
+      <app-followed-user [user]="user" (userSelected)="onUserSelected($event)">
+      </app-followed-user>
+      }
+    </ion-list>
+    }
+
+    <!-- Offline Users Section -->
+    @if (offlineUsers.length > 0) {
+    <ion-list class="users-list offline-list">
+      @for (user of offlineUsers; track user.user_id) {
+      <app-followed-user [user]="user" (userSelected)="onUserSelected($event)">
+      </app-followed-user>
+      }
+    </ion-list>
+    }
+  </div>
+  }
+</ion-content>

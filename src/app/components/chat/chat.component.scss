@@ -1,0 +1,50 @@
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  height: 100%; // Ensure it takes full height
+  min-height: 400px; // Minimum height for usability
+}
+
+// ... rest of existing styles remain the same ...
+
+// Ensure proper height distribution
+.chat-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 0;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.messages-content {
+  flex: 1;
+  --padding-start: 8px;
+  --padding-end: 8px;
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+  overflow-y: auto;
+  min-height: 0; // Important for proper scrolling
+
+  &.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+// Input container stays at bottom
+.input-container {
+  flex-shrink: 0;
+  padding: 8px 0 0 0;
+  border-top: 1px solid var(--ion-color-light-shade);
+  background: var(--ion-color-step-50);
+}
+
+.message-content-item {
+  --background: var(--ion-item-background);
+}

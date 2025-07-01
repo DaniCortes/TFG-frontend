@@ -1,0 +1,155 @@
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  gap: 16px;
+
+  ion-spinner {
+    width: 48px;
+    height: 48px;
+  }
+
+  ion-text {
+    font-size: 1rem;
+  }
+}
+
+.video-grid {
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+}
+
+.video-row {
+  height: 100vh;
+  margin: 0;
+}
+
+.video-col {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+
+  app-video-player {
+    width: 100%;
+    height: auto;
+    flex: 1;
+  }
+
+  // Mobile: Stack vertically, video takes natural height
+  @media (max-width: 991px) {
+    height: auto;
+    flex: none;
+    margin-bottom: 0;
+  }
+
+  @media (min-width: 1200px) {
+    padding: 16px;
+  }
+}
+
+.chat-col {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  height: 70vh;
+
+  app-chat {
+    width: 100%;
+    height: 100%;
+    flex: 1;
+  }
+
+  @media (min-width: 1200px) {
+    padding: 16px;
+  }
+}
+
+// Mobile: Stack vertically with chat taking remaining height
+@media (max-width: 991px) {
+  .video-grid {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .video-row {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .video-col {
+    flex: none;
+    height: auto;
+    min-height: 250px;
+    max-height: 40vh; // Limit video height on mobile
+  }
+
+  .chat-col {
+    flex: 1;
+    height: auto;
+    min-height: 0;
+
+    app-chat {
+      height: 100%;
+    }
+  }
+}
+
+// Very small screens
+@media (max-width: 576px) {
+  .video-col {
+    padding: 4px;
+    min-height: 200px;
+    max-height: 35vh;
+  }
+
+  .chat-col {
+    padding: 4px;
+  }
+}
+
+// Landscape mobile orientation
+@media (max-width: 991px) and (orientation: landscape) and (max-height: 600px) {
+  .video-grid {
+    flex-direction: row;
+  }
+
+  .video-row {
+    flex-direction: row;
+  }
+
+  .video-col {
+    flex: 2;
+    height: 100vh;
+    max-height: none;
+    margin-bottom: 0;
+  }
+
+  .chat-col {
+    flex: 1;
+    height: 100vh;
+  }
+}
+
+// Ultra-wide screens
+@media (min-width: 1400px) {
+  .video-grid {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+}
+
+// Remove debug borders for production
+// .video-col {
+//   border: 1px solid rgba(255, 0, 0, 0.2);
+// }
+
+// .chat-col {
+//   border: 1px solid rgba(0, 255, 0, 0.2);
+// }

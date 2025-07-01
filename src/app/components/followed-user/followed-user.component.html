@@ -1,0 +1,22 @@
+<ion-item
+  [button]="true"
+  (click)="onUserClick()"
+  [class]="'user-item ' + user.stream_status"
+  lines="none"
+>
+  <ion-avatar slot="start" class="user-avatar">
+    <img [src]="defaultProfilePicture" [alt]="user.username" />
+  </ion-avatar>
+
+  <ion-label>
+    <h3 class="username">{{ user.username }}</h3>
+  </ion-label>
+
+  <ion-chip color="medium" class="status-badge" [disabled]="true">
+    @if (user.stream_status === 'live') {
+    <ion-icon name="ellipse" color="danger"></ion-icon>
+    LIVE } @else {
+    <ion-icon name="person-outline"></ion-icon>
+    Offline }
+  </ion-chip>
+</ion-item>

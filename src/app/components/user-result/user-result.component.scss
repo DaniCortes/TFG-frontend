@@ -1,0 +1,18 @@
+h3 {
+    font-weight: 600;
+}
+
+p {
+    font-weight: 500;
+    color: var(--ion-color-medium);
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.followers-info {
+    color: var(--ion-color-medium);
+}
