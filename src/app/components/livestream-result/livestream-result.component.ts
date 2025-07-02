@@ -7,6 +7,7 @@ import { IonBadge, IonImg, IonItem, IonLabel } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { radio } from 'ionicons/icons';
 import { Observable } from 'rxjs';
+import { apiUrl } from 'src/environments/environment';
 
 @Component({
   selector: 'app-livestream-result',
@@ -29,19 +30,14 @@ export class LivestreamResultComponent implements OnInit {
   }
 
   getThumbnailURL(livestream: Livestream): string {
-    return (
-      'https://api.danielcortes.dev/streams/' +
-      livestream.id +
-      '/thumbnail.webp'
-    );
+    return `${apiUrl}/streams/${livestream.id}/thumbnail.webp`;
   }
 
   getUserInfo(livestream: Livestream): Observable<User> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    return this.http.get<User>(
-      'https://api.danielcortes.dev/user/' + livestream.user_id,
-      { headers }
-    );
+    return this.http.get<User>(`${apiUrl}/user/${livestream.user_id}`, {
+      headers,
+    });
   }
 
   ngOnInit() {

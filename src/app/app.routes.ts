@@ -4,7 +4,6 @@ import { LoginPage } from '@/pages/login/login.page';
 import { ProfilePage } from '@/pages/profile/profile.page';
 import { RegisterPage } from '@/pages/register/register.page';
 import { SearchResultsPage } from '@/pages/search-results/search-results.page';
-import { VideoTestPage } from '@/pages/video-test/video-test.page';
 import { VideoPage } from '@/pages/video/video.page';
 import { Routes } from '@angular/router';
 
@@ -41,11 +40,6 @@ export const routes: Routes = [
     path: 'search',
     component: SearchResultsPage,
     data: { showSidebar: true, title: 'Search Results' },
-  },
-  {
-    path: 'videotest',
-    component: VideoTestPage,
-    data: { showSidebar: true, title: 'Video Test' },
   },
   {
     path: 'vod/:id',

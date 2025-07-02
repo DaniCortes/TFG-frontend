@@ -3,8 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
 };
+
+export const apiUrl: string = 'https://api.danielcortes.dev';
+export const wsUrl: string = 'wss://api.danielcortes.dev';
 
 /*
  * For easier debugging in development mode, you can import the following file

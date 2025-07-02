@@ -14,6 +14,7 @@ import {
   IonSpinner,
   IonText,
 } from '@ionic/angular/standalone';
+import { apiUrl } from 'src/environments/environment';
 
 @Component({
   selector: 'app-video',
@@ -76,20 +77,18 @@ export class VideoPage implements OnInit {
 
   private getUserId(username: string): Promise<string> {
     return new Promise((resolve, reject) => {
-      this.http
-        .get<User>(`https://api.danielcortes.dev/users/${username}`)
-        .subscribe({
-          next: (user) => resolve(user.user_id),
-          error: () => reject('User not found'),
-        });
+      this.http.get<User>(`${apiUrl}/users/${username}`).subscribe({
+        next: (user) => resolve(user.user_id),
+        error: () => reject('User not found'),
+      });
     });
   }
 
   private getVideoData(userId?: string, streamId?: string): Promise<Stream> {
     return new Promise((resolve, reject) => {
       const url = userId
-        ? `https://api.danielcortes.dev/streams/live/${userId}`
-        : `https://api.danielcortes.dev/streams/${streamId}`;
+        ? `${apiUrl}/streams/live/${userId}`
+        : `${apiUrl}/streams/${streamId}`;
       this.http.get<Stream>(url).subscribe({
         next: (stream) => resolve(stream),
         error: () => reject('Stream not found'),

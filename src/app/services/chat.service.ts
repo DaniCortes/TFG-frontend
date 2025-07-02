@@ -1,6 +1,7 @@
 import { AuthService } from '@/services/auth.service';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { wsUrl } from 'src/environments/environment';
 export interface ChatMessage {
   event: string;
   sender_id?: string;
@@ -40,10 +41,10 @@ export class ChatService {
     this.currentChatId = chatId;
     this.isAuthSent = false;
 
-    const wsUrl = `wss://api.danielcortes.dev/chat/${chatId}`;
+    const websocketUrl = `${wsUrl}/chat/${chatId}`;
 
     try {
-      this.ws = new WebSocket(wsUrl);
+      this.ws = new WebSocket(websocketUrl);
       this.setupWebSocketListeners();
     } catch (error) {
       console.error('WebSocket connection error:', error);

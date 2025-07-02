@@ -8,7 +8,7 @@ export class TimeService {
 
   getTimeAgo(timestamp: string): string {
     const now = new Date();
-    const date = new Date(timestamp + 'Z'); // Ensure the timestamp is in UTC format
+    const date = new Date(timestamp + 'Z');
 
     const seconds = Math.floor((now.getTime() - date.getTime()) / 1000);
 

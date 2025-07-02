@@ -1,20 +1,21 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable, forkJoin, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
 import {
   Livestream,
   PaginationRange,
   SearchResults,
   User,
   VOD,
-} from '../interfaces/search.interfaces';
+} from '@/interfaces/search.interfaces';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable, forkJoin, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { apiUrl } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SearchService {
-  private apiUrl = 'https://api.danielcortes.dev/search';
+  private baseUrl = `${apiUrl}/search`;
 
   constructor(private http: HttpClient) {}
 
@@ -54,7 +55,7 @@ export class SearchService {
     headers.append('Content-Type', 'application/json');
 
     return this.http
-      .get<User[]>(`${this.apiUrl}/users?q=${encodeURIComponent(query)}`, {
+      .get<User[]>(`${this.baseUrl}/users?q=${encodeURIComponent(query)}`, {
         headers,
       })
       .pipe(
@@ -77,7 +78,7 @@ export class SearchService {
 
     return this.http
       .get<Livestream[]>(
-        `${this.apiUrl}/livestreams?q=${encodeURIComponent(query)}`,
+        `${this.baseUrl}/livestreams?q=${encodeURIComponent(query)}`,
         {
           headers,
         }
@@ -98,7 +99,7 @@ export class SearchService {
     headers.append('Content-Type', 'application/json');
 
     return this.http
-      .get<VOD[]>(`${this.apiUrl}/vods?q=${encodeURIComponent(query)}`, {
+      .get<VOD[]>(`${this.baseUrl}/vods?q=${encodeURIComponent(query)}`, {
         headers,
       })
       .pipe(

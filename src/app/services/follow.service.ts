@@ -3,12 +3,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, of, shareReplay, switchMap, timer } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
+import { apiUrl } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FollowService {
-  private apiUrl = 'https://api.danielcortes.dev/follows';
+  private baseUrl = `${apiUrl}/follows`;
   private pollingInterval = 15000; // 15 seconds in milliseconds
   private headers = new HttpHeaders({
     'Content-Type': 'application/json',
@@ -16,7 +17,9 @@ export class FollowService {
 
   private followedUsers$ = timer(0, this.pollingInterval).pipe(
     switchMap(() =>
-      this.http.get<FollowedUser[]>(`${this.apiUrl}`, { headers: this.headers })
+      this.http.get<FollowedUser[]>(`${this.baseUrl}`, {
+        headers: this.headers,
+      })
     ),
     shareReplay(1)
   );
@@ -29,7 +32,7 @@ export class FollowService {
 
   followUser(userId: string): Observable<any> {
     return this.http
-      .post(`${this.apiUrl}/${userId}`, { headers: this.headers })
+      .post(`${this.baseUrl}/${userId}`, { headers: this.headers })
       .pipe(
         catchError((error) => {
           console.error('Error following user:', error);
@@ -40,7 +43,7 @@ export class FollowService {
 
   unfollowUser(userId: string): Observable<any> {
     return this.http
-      .delete(`${this.apiUrl}/${userId}`, { headers: this.headers })
+      .delete(`${this.baseUrl}/${userId}`, { headers: this.headers })
       .pipe(
         catchError((error) => {
           console.error('Error unfollowing user:', error);

@@ -20,6 +20,7 @@ import {
   volumeHighOutline,
   volumeMuteOutline,
 } from 'ionicons/icons';
+import { apiUrl } from 'src/environments/environment';
 
 interface QualityLevel {
   height: number;
@@ -80,10 +81,7 @@ export class VideoPlayerComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit() {
-    this.thumbnailUrl =
-      'https://api.danielcortes.dev/streams/' +
-      this.streamId +
-      '/thumbnail.webp';
+    this.thumbnailUrl = `${apiUrl}/streams/${this.streamId}/thumbnail.webp`;
     this.setupEventListeners();
   }
 
@@ -98,9 +96,8 @@ export class VideoPlayerComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private get videoUrl(): string {
-    const baseUrl = 'https://api.danielcortes.dev';
     const type = this.isLive ? 'live' : 'vod';
-    return `${baseUrl}/${type}/${this.streamId}/master.m3u8`;
+    return `${apiUrl}/${type}/${this.streamId}/master.m3u8`;
   }
 
   private initializePlayer() {

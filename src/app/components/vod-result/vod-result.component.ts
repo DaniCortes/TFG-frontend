@@ -7,6 +7,7 @@ import { IonBadge, IonImg, IonItem, IonLabel } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { playCircle } from 'ionicons/icons';
 import { Observable } from 'rxjs';
+import { apiUrl } from 'src/environments/environment';
 
 @Component({
   selector: 'app-vod-result',
@@ -29,15 +30,12 @@ export class VodResultComponent implements OnInit {
   }
 
   getThumbnailURL(vod: VOD): string {
-    return 'https://api.danielcortes.dev/streams/' + vod.id + '/thumbnail.webp';
+    return apiUrl + '/streams/' + vod.id + '/thumbnail.webp';
   }
 
   getUserInfo(vod: VOD): Observable<User> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    return this.http.get<User>(
-      'https://api.danielcortes.dev/user/' + vod.user_id,
-      { headers }
-    );
+    return this.http.get<User>(`${apiUrl}/user/${vod.user_id}`, { headers });
   }
 
   ngOnInit() {

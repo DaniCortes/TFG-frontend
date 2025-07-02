@@ -1,3 +1,5 @@
+import { FollowedUser } from '@/interfaces/follow.interfaces';
+import { TimeService } from '@/services/time.service';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import {
@@ -9,8 +11,6 @@ import {
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { ellipse, personOutline, radioOutline } from 'ionicons/icons';
-import { FollowedUser } from '../../interfaces/follow.interfaces';
-import { TimeService } from '../../services/time.service';
 
 @Component({
   selector: 'app-followed-user',

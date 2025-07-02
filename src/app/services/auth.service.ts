@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+import { apiUrl } from 'src/environments/environment';
 
 interface ProfileData {
   is_admin?: boolean;
@@ -38,8 +39,6 @@ interface ChangePasswordRequest {
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'https://api.danielcortes.dev';
-
   constructor(private http: HttpClient) {}
 
   login(username: string, password: string): Observable<any> {
@@ -53,7 +52,7 @@ export class AuthService {
     );
 
     return this.http
-      .post(`${this.apiUrl}/sessions`, body.toString(), { headers })
+      .post(`${apiUrl}/sessions`, body.toString(), { headers })
       .pipe(
         tap((response: any) => {
           if (response && response.access_token) {
@@ -77,7 +76,7 @@ export class AuthService {
       'application/x-www-form-urlencoded'
     );
 
-    return this.http.post(`${this.apiUrl}/users`, body.toString(), { headers });
+    return this.http.post(`${apiUrl}/users`, body.toString(), { headers });
   }
 
   logout(): void {
@@ -121,7 +120,7 @@ export class AuthService {
   }
 
   getMe(): Observable<Me> {
-    return this.http.get<Me>(`${this.apiUrl}/users/me`).pipe(
+    return this.http.get<Me>(`${apiUrl}/users/me`).pipe(
       catchError((error) => {
         console.error('Error fetching user data:', error);
         return throwError(() => error);
@@ -130,7 +129,7 @@ export class AuthService {
   }
 
   getProfile(): Observable<ProfileData> {
-    return this.http.get<ProfileData>(`${this.apiUrl}/profile`).pipe(
+    return this.http.get<ProfileData>(`${apiUrl}/profile`).pipe(
       catchError((error) => {
         console.error('Error fetching profile:', error);
         return throwError(() => error);
@@ -144,7 +143,7 @@ export class AuthService {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
 
     return this.http
-      .patch<ProfileUpdateResponse>(`${this.apiUrl}/profile`, profileData, {
+      .patch<ProfileUpdateResponse>(`${apiUrl}/profile`, profileData, {
         headers,
       })
       .pipe(
@@ -164,7 +163,7 @@ export class AuthService {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
 
     return this.http
-      .patch(`${this.apiUrl}/profile/password`, passwords, { headers })
+      .patch(`${apiUrl}/profile/password`, passwords, { headers })
       .pipe(
         catchError((error) => {
           console.error('Change password failed', error);

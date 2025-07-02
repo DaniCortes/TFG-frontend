@@ -9,6 +9,7 @@ import {
   IonLabel,
 } from '@ionic/angular/standalone';
 import { catchError, Observable, tap, throwError } from 'rxjs';
+import { apiUrl } from 'src/environments/environment';
 
 @Component({
   selector: 'app-user-result',
@@ -28,9 +29,7 @@ export class UserResultComponent implements OnInit {
 
   getLiveStream(user: User): Observable<Livestream> {
     return this.http
-      .get<Livestream>(
-        `https://api.danielcortes.dev/streams/live/${user.user_id}`
-      )
+      .get<Livestream>(`${apiUrl}/streams/live/${user.user_id}`)
       .pipe(
         tap((livestream) => {
           this.livestream = livestream;
